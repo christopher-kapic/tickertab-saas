@@ -10,6 +10,11 @@
 
 # This project was bootstrapped with Next.js Subscription Payments Starter
 
+### Modifications:
+- schema.sql
+- Hosted with Netlify instead of Vercel
+  - Vercel requires a pro account in order to charge money, therefore I chose to host with Netlify. I'll probably make a tutorial for how to switch to Netlify from Vercel in the future.
+
 The all-in-one starter kit for high-performance SaaS applications.
 
 ## Features
