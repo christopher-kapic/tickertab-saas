@@ -8,7 +8,7 @@ import LoadingDots from '@/components/ui/LoadingDots';
 import Logo from '@/components/icons/Logo';
 import { useUser } from '@/utils/useUser';
 
-import styles from '../../styles/Calculator.module.css';
+import styles from '@/styles/Calculator.module.css';
 
 const Calculator = () => {
   return (
