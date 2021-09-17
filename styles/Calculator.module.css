@@ -3,3 +3,18 @@
     height: 90vh;
     background-color: #353535;
 }
+
+.searchwrapper {
+    width: 100vw;
+    min-width: 100vw;
+    height: 35vh;
+    background-color: #353535;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.searchwrapper h1 {
+    font-size: 3em;
+}

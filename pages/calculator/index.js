@@ -8,11 +8,26 @@ import LoadingDots from '@/components/ui/LoadingDots';
 import Logo from '@/components/icons/Logo';
 import { useUser } from '@/utils/useUser';
 
-import styles from '@/styles/Calculator.module.css';
+import styles from '../../styles/Calculator.module.css';
 
 const Calculator = () => {
+  const [ticker, setTicker] = useState('');
+
   return (
-    <div className={styles.calculatorwrapper}>
+    <div className={styles.searchwrapper}>
+      <h1>Search</h1>
+      <div style={{width: 100}} onKeyPress={(e) => {
+        if (e.code === "Enter")
+        location.href = `/calculator/${ticker}`;
+      }}>
+        <Input
+          type="text"
+          placeholder="Ticker"
+          value={ticker}
+          onChange={setTicker}
+          required
+        />
+      </div>
     </div>
   )
 };
