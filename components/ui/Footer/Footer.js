@@ -14,7 +14,7 @@ export default function Footer() {
               <span className="rounded-full border border-gray-700 mr-2">
                 <Logo />
               </span>
-              <span>ACME</span>
+              <span>TickerTab</span>
             </a>
           </Link>
         </div>
@@ -77,7 +77,7 @@ export default function Footer() {
           <div className="flex space-x-6 items-center h-10">
             <a
               aria-label="Github Repository"
-              href="https://github.com/vercel/nextjs-subscription-payments"
+              href="https://github.com/christopher-kapic/tickertab-saas"
               className={s.link}
             >
               <GitHub />
@@ -87,17 +87,11 @@ export default function Footer() {
       </div>
       <div className="py-12 flex flex-col md:flex-row justify-between items-center space-y-4 bg-primary-2">
         <div>
-          <span>&copy; 2020 ACME, Inc. All rights reserved.</span>
+          <span>&copy; 2021 TickerTab, Inc. All rights reserved.</span>
         </div>
         <div className="flex items-center">
-          <span className="text-primary">Crafted by</span>
-          <a href="https://vercel.com" aria-label="Vercel.com Link">
-            <img
-              src="/vercel.svg"
-              alt="Vercel.com Logo"
-              className="inline-block h-6 ml-4 text-primary"
-            />
-          </a>
+          <span className="text-primary">Crafted by&nbsp;</span>
+          <a href="https://kapic.io" aria-label="Kapic.io Link">Christopher Kapic</a>
         </div>
       </div>
     </footer>

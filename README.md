@@ -1,4 +1,14 @@
-# Next.js Subscription Payments Starter
+# TickerTab
+
+### To do:
+
+- pages/api/historicals
+- pages/api/chain
+- pages/calculator
+  - search
+  - display the calculator for /\[ticker\]
+
+# This project was bootstrapped with Next.js Subscription Payments Starter
 
 The all-in-one starter kit for high-performance SaaS applications.
 

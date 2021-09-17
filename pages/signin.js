@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import Button from '@/components/ui/Button';
-import GitHub from '@/components/icons/GitHub';
 import Input from '@/components/ui/Input';
 import LoadingDots from '@/components/ui/LoadingDots';
 import Logo from '@/components/icons/Logo';
@@ -146,28 +145,6 @@ const SignIn = () => {
               </Link>
             </span>
           </div>
-
-          <div className="flex items-center my-6">
-            <div
-              className="border-t border-accents-2 flex-grow mr-3"
-              aria-hidden="true"
-            ></div>
-            <div className="text-accents-4">Or</div>
-            <div
-              className="border-t border-accents-2 flex-grow ml-3"
-              aria-hidden="true"
-            ></div>
-          </div>
-
-          <Button
-            variant="slim"
-            type="submit"
-            disabled={loading}
-            onClick={() => handleOAuthSignIn('github')}
-          >
-            <GitHub />
-            <span className="ml-2">Continue with GitHub</span>
-          </Button>
         </div>
       </div>
     );
