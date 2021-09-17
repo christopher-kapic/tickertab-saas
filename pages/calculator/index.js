@@ -24,7 +24,9 @@ const Calculator = () => {
           type="text"
           placeholder="Ticker"
           value={ticker}
-          onChange={setTicker}
+          onChange={(e) => {
+            setTicker(e.toUpperCase())
+          }}
           required
         />
       </div>
