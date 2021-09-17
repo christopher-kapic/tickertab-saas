@@ -18,7 +18,12 @@ export const getUser = async (token) => {
 };
 
 export const getSubscription = async (user_id) => {
-  const { data, error } = await supabaseAdmin.from('subscriptions').select().eq('user_id', user_id).order('created', { ascending: false }).limit(1);
+  const { data, error } = await supabaseAdmin.from('subscriptions').select().eq('user_id', user_id).order('created', { ascending: false }).limit(1).select(`price_id, prices (
+    product_id,
+    products (
+      id, name
+    )
+  )`);
 
   if (error) {
     throw error;
