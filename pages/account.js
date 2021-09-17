@@ -25,7 +25,6 @@ export default function Account() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { userLoaded, user, session, userDetails, subscription } = useUser();
-  console.log(session);
 
   useEffect(() => {
     if (!user) router.replace('/signin');
