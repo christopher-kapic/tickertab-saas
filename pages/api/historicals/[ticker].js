@@ -8,6 +8,8 @@ const getHistoricals = async (req, res) => {
     const user = await getUser(token);
     const subscription = await getSubscription(user.id);
     console.log(subscription.prices.products)
+    console.log(subscription.prices)
+    console.log(subscription)
 
     if (!subscription || subscription.status === "cancelled") {
       return (res
