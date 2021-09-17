@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import LoadingDots from '@/components/ui/LoadingDots';
 import Button from '@/components/ui/Button';
 import { useUser } from '@/utils/useUser';
-import { postData } from '@/utils/helpers';
+import { postData, getData } from '@/utils/helpers';
 
 function Card({ title, description, footer, children }) {
   return (
@@ -40,6 +40,13 @@ export default function Account() {
     window.location.assign(url);
     setLoading(false);
   };
+
+  const triggerHistoricalTemp = async () => {
+    setLoading(true);
+    const {data, error} = await getData({url: '/api/historicals/tsla', token: session.access_token});
+    console.log(data);
+    setLoading(false);
+  }
 
   const subscriptionName = subscription && subscription.prices.products.name;
   const subscriptionPrice =
@@ -81,6 +88,14 @@ export default function Account() {
                 onClick={redirectToCustomerPortal}
               >
                 Open customer portal
+              </Button>
+              <Button
+                variant="slim"
+                loading={loading}
+                disabled={loading}
+                onClick={triggerHistoricalTemp}
+              >
+                Test /historicals/tsla
               </Button>
             </div>
           }

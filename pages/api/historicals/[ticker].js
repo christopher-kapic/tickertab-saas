@@ -1,4 +1,3 @@
-import { toDateTime } from "@/utils/helpers";
 import { getSubscription, getUser } from "@/utils/supabase-admin";
 
 const getHistoricals = async (req, res) => {
@@ -8,6 +7,7 @@ const getHistoricals = async (req, res) => {
   try {
     const user = await getUser(token);
     const subscription = await getSubscription(user.id);
+    console.log(subscription)
 
     if (!subscription || subscription.status === "cancelled") {
       return (res

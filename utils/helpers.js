@@ -23,6 +23,20 @@ export const postData = async ({ url, token, data = {} }) => {
   return res.json();
 };
 
+export const getData = async ({ url, token }) => {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: new Headers({ 'Content-Type': 'application/json', token}),
+    credentials: 'same-origin',
+  });
+
+  if (res.error) {
+    throw error;
+  }
+
+  return res.json();
+}
+
 export const toDateTime = (secs) => {
   var t = new Date('1970-01-01T00:30:00Z'); // Unix epoch start.
   t.setSeconds(secs);
