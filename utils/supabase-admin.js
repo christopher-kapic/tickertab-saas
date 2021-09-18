@@ -31,3 +31,25 @@ export const getSubscription = async (user_id) => {
 
   return data;
 }
+
+export const getHistoricalsFromDatabase = async (ticker) => {
+  try {
+    const { data, error } = await supabaseAdmin.from('historicals').select().eq('ticker', ticker).limit(1);
+
+    if (error) {
+      throw error;
+    }
+
+    if (data.length === 0) {
+      return null;
+    }
+
+    return {historicals: data.historical, updated_at: data.updated_at};
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const getChainFromDatabase = async (ticker) => {
+  return ticker;
+}
