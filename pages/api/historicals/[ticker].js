@@ -1,15 +1,26 @@
-import { getSubscription, getUser, getHistoricalsFromDatabase } from "@/utils/supabase-admin";
-
+import { getSubscription, getUser, getHistoricalsFromDatabase, supabaseAdmin } from "@/utils/supabase-admin";
+import { next4PMNYCISOString } from "@/utils/helpers";
 
 
 const getHistoricalsCheckCache = async (ticker) => {
+  const now = new Date();
   let historicals = await getHistoricalsFromDatabase(ticker);
-  const lastEOD = new Date();
-  if (historicals === null || historicals.updated_at /**/) {
-    //fetch
+  if (!historicals[0] || new Date(historicals.updated_at) < now) {
+    // fetch
+    const apires = await fetch(`https://eodhistoricaldata.com/api/eod/${ticker}.US?api_token=${process.env.EODHISTORICAL_KEY}`, {
+      method: "GET"
+    })
+    const apijson = await apires.json()
+    const next_expiration = new Date(next4PMNYCISOString())
+
     //upsert historicals
+    const {data, error} = await supabaseAdmin.from('historicals')
+      .upsert({ticker: ticker, historical: apijson, expires_at: next_expiration})
+
     //return historicals
+    return {ticker: ticker, historical: apijson, expires_at: next_expiration}
   }
+  return historicals
 }
 
 const getHistoricals = async (req, res) => {
@@ -28,6 +39,10 @@ const getHistoricals = async (req, res) => {
         .status(403)
         .json({ error: { statusCode: 403, message: "Client does not have an active subscription."}}))
     }
+
+    const result = await getHistoricalsCheckCache(ticker)
+
+    return (res.status(200).json(result))
 
 
   } catch (err) {
