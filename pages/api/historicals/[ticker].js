@@ -15,9 +15,11 @@ const getHistoricalsCheckCache = async (ticker) => {
     const next_expiration = new Date(next4PMNYCISOString())
 
     //upsert historicals
-    const {data, error} = await supabaseAdmin.from('historicals')
-      .upsert({ticker: ticker, historical: apijson, expires_at: next_expiration})
+    // const {data, error} = await supabaseAdmin.from('historicals')
+      // .upsert({ticker: ticker, historical: apijson, expires_at: next_expiration})
 
+    await supabaseAdmin.from('historicals').delete().match({ticker: ticker})
+    await supabaseAdmin.from('historicals').insert({ticker: ticker, historical: apijson, expires_at: next_expiration})
     //return historicals
     return {ticker: ticker, historical: apijson, expires_at: next_expiration}
   }
