@@ -34,7 +34,7 @@ export const getSubscription = async (user_id) => {
 
 export const getHistoricalsFromDatabase = async (ticker) => {
   try {
-    const { data, error } = await supabaseAdmin.from('historicals').select().eq('ticker', ticker).limit(1);
+    const { data, error } = await supabaseAdmin.from('historicals').select().eq('ticker', ticker.toUpperCase()).limit(1);
 
     if (error) {
       throw error;
@@ -44,7 +44,7 @@ export const getHistoricalsFromDatabase = async (ticker) => {
       return null;
     }
 
-    return {historicals: data.historical, updated_at: data.updated_at};
+    return data
   } catch (err) {
     console.log(err);
   }
