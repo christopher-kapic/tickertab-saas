@@ -5,13 +5,14 @@ import { next4PMNYCISOString } from "@/utils/helpers";
 const getHistoricalsCheckCache = async (ticker) => {
   const now = new Date();
   let historicals = await getHistoricalsFromDatabase(ticker);
-  console.log(historicals)
   if (historicals === null || new Date(historicals[0].updated_at) < now) {
     // fetch
     const apires = await fetch(`https://eodhistoricaldata.com/api/eod/${ticker}.US?api_token=${process.env.EODHISTORICAL_KEY}`, {
       method: "GET"
     })
+    console.log(apires)
     const apijson = await apires.json()
+    console.log(apijson)
     const next_expiration = new Date(next4PMNYCISOString())
 
     //upsert historicals
