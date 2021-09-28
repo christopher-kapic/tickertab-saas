@@ -7,12 +7,12 @@ const getHistoricalsCheckCache = async (ticker) => {
   let historicals = await getHistoricalsFromDatabase(ticker.toUpperCase());
   console.log(historicals)
   if (historicals === null || new Date(historicals[0].updated_at) < now) {
+    console.log(`Cache miss: ${ticker.toUpperCase}`)
     // fetch
     const apires = await fetch(`https://eodhistoricaldata.com/api/eod/${ticker.toUpperCase()}.US?api_token=${process.env.EODHISTORICAL_KEY}&fmt=json`, {
       method: "GET"
     }).catch((err) => {console.log(err)})
     const apijson = await apires.json()
-    console.log(apijson)
     const next_expiration = new Date(next4PMNYCISOString())
 
     //upsert historicals
@@ -24,6 +24,7 @@ const getHistoricalsCheckCache = async (ticker) => {
     //return historicals
     return {ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration}
   }
+  console.log(`Cache hit: ${ticker.toUpperCase}`)
   return historicals
 }
 
