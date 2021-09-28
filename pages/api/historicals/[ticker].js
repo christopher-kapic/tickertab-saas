@@ -24,7 +24,7 @@ const getHistoricalsCheckCache = async (ticker) => {
     return {ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration}
   }
   console.log(`Cache hit: ${ticker.toUpperCase}`)
-  return historicals
+  return historicals[0]
 }
 
 const getHistoricals = async (req, res) => {
