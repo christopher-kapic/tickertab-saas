@@ -5,7 +5,6 @@ import { next4PMNYCISOString } from "@/utils/helpers";
 const getHistoricalsCheckCache = async (ticker) => {
   const now = new Date();
   let historicals = await getHistoricalsFromDatabase(ticker.toUpperCase());
-  console.log(historicals)
   if (historicals === null || new Date(historicals[0].updated_at) < now) {
     console.log(`Cache miss: ${ticker.toUpperCase}`)
     // fetch
