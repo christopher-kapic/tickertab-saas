@@ -7,6 +7,7 @@ import Button from '@/components/ui/Button';
 import { useUser } from '@/utils/useUser';
 import { postData, getData } from '@/utils/helpers';
 
+
 function Card({ title, description, footer, children }) {
   return (
     <div className="border border-accents-1	max-w-3xl w-full p rounded-md m-auto my-8">

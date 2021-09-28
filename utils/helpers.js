@@ -42,3 +42,15 @@ export const toDateTime = (secs) => {
   t.setSeconds(secs);
   return t;
 };
+
+export const next4PMNYCISOString = () => {
+  const now = new Date();
+  const now_est_es = now.toLocaleString("es", { timeZone: "America/New_York" });
+  const nyc_hour = now_est_es.split(" ")[1].split(":")[0];
+  const offset = (16 + 24 - nyc_hour) % 24;
+  const n4pm = () => {
+    const tom_offset = new Date(now.setHours(now.getHours() + offset));
+    return tom_offset.toISOString().split(":")[0] + ":00:00.000Z";
+  };
+  return n4pm()
+};

@@ -1,5 +1,7 @@
 import { getSubscription, getUser, getHistoricalsFromDatabase } from "@/utils/supabase-admin";
 
+
+
 const getHistoricalsCheckCache = async (ticker) => {
   let historicals = await getHistoricalsFromDatabase(ticker);
   const lastEOD = new Date();
