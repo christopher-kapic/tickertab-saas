@@ -10,7 +10,7 @@ const getHistoricalsCheckCache = async (ticker) => {
     const apires = await fetch(`https://eodhistoricaldata.com/api/eod/${ticker.toUpperCase()}.US?api_token=${process.env.EODHISTORICAL_KEY}`, {
       method: "GET"
     }).catch((err) => {console.log(err)})
-    const apijson = await apires.json()
+    const apijson = await apires.text()
     console.log(apijson)
     const next_expiration = new Date(next4PMNYCISOString())
 
