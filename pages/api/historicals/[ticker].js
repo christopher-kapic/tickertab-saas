@@ -7,10 +7,10 @@ const getHistoricalsCheckCache = async (ticker) => {
   let historicals = await getHistoricalsFromDatabase(ticker);
   if (historicals === null || new Date(historicals[0].updated_at) < now) {
     // fetch
-    const apires = await fetch(`https://eodhistoricaldata.com/api/eod/${ticker.toUpperCase()}.US?api_token=${process.env.EODHISTORICAL_KEY}`, {
+    const apires = await fetch(`https://eodhistoricaldata.com/api/eod/${ticker.toUpperCase()}.US?api_token=${process.env.EODHISTORICAL_KEY}&fmt=json`, {
       method: "GET"
     }).catch((err) => {console.log(err)})
-    const apijson = await apires.text()
+    const apijson = await apires.json()
     console.log(apijson)
     const next_expiration = new Date(next4PMNYCISOString())
 
