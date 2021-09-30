@@ -51,5 +51,23 @@ export const getHistoricalsFromDatabase = async (ticker) => {
 }
 
 export const getChainFromDatabase = async (ticker) => {
+  try {
+    const { data, error } = await supabaseAdmin.from('chains').select().eq('ticker', ticker.toUpperCase()).limit(1);
+
+    if (error) {
+      throw error;
+    }
+
+    if (data.length === 0) {
+      return null;
+    }
+
+    return data
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const getChainFromDatabase = async (ticker) => {
   return ticker;
 }
