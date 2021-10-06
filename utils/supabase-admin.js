@@ -67,7 +67,3 @@ export const getChainFromDatabase = async (ticker) => {
     console.log(err);
   }
 }
-
-export const getChainFromDatabase = async (ticker) => {
-  return ticker;
-}
