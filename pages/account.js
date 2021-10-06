@@ -22,6 +22,8 @@ function Card({ title, description, footer, children }) {
     </div>
   );
 }
+
+
 export default function Account() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
