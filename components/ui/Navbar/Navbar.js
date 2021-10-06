@@ -3,6 +3,7 @@ import s from './Navbar.module.css';
 
 import Logo from '@/components/icons/Logo';
 import { useUser } from '@/utils/useUser';
+import router from 'next/router';
 
 const Navbar = () => {
   const { user, signOut } = useUser();
@@ -40,7 +41,10 @@ const Navbar = () => {
           <div className="flex flex-1 justify-end space-x-8">
             {user ? (
               <Link href="#">
-                <a className={s.link} onClick={() => signOut()}>
+                <a className={s.link} onClick={() => {
+                  router.replace("/signin");
+                  signOut();
+                }}>
                   Sign out
                 </a>
               </Link>
