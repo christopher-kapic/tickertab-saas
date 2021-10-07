@@ -24,9 +24,9 @@ const getHistoricalsCheckCache = async (ticker) => {
       // .upsert({ticker: ticker, historical: apijson, expires_at: next_expiration})
 
     try {
-      await supabaseAdmin.from('historicals').update({ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration}).match({ticker: ticker.toUpperCase()});
-    } catch {
       await supabaseAdmin.from('historicals').insert({ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration});
+    } catch {
+      await supabaseAdmin.from('historicals').update({ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration}).match({ticker: ticker.toUpperCase()});
     }
     // await supabaseAdmin.from('historicals').delete().match({ticker: ticker.toUpperCase()})
     //return historicals
