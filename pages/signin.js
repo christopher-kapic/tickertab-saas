@@ -11,7 +11,7 @@ import { useUser } from '@/utils/useUser';
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPasswordInput, setShowPasswordInput] = useState(false);
+  const [showPasswordInput, setShowPasswordInput] = useState(true);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', content: '' });
   const router = useRouter();

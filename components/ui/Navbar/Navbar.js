@@ -22,19 +22,25 @@ const Navbar = () => {
               </a>
             </Link>
             <nav className="space-x-2 ml-6 hidden lg:block">
-              <Link href="/">
-                <a className={s.link}>Home</a>
-              </Link>
-              { user ? (
-                <Link href="/calculator">
-                  <a className={s.link}>Calculator</a>
-                </Link>
+             { user ? (
+                <>
+                  <Link href="/calculator">
+                    <a className={s.link}>Calculator</a>
+                  </Link>
+                  <Link href="/account">
+                    <a className={s.link}>Account</a>
+                  </Link>
+                </>
               ) : (
-                <></>
+                <>
+                  <Link href="/">
+                    <a className={s.link}>Home</a>
+                  </Link>
+                  <Link href="/pricing">
+                    <a className={s.link}>Pricing</a>
+                  </Link>
+                </>
               )}
-              <Link href="/account">
-                <a className={s.link}>Account</a>
-              </Link>
             </nav>
           </div>
 

@@ -92,14 +92,6 @@ export default function Account() {
               >
                 Open customer portal
               </Button>
-              <Button
-                variant="slim"
-                loading={loading}
-                disabled={loading}
-                onClick={triggerHistoricalTemp}
-              >
-                Test /historicals/tsla
-              </Button>
             </div>
           }
         >
@@ -120,7 +112,7 @@ export default function Account() {
 
 
 
-        <Card
+        {/* <Card
           title="Your Name"
           description="Please enter your full name, or a display name you are comfortable with."
           // footer={<p>Please use 64 characters at maximum.</p>}
@@ -135,14 +127,14 @@ export default function Account() {
               </div>
             )}
           </div>
-        </Card>
+        </Card> */}
 
 
 
         <Card
           title="Your Email"
-          description="Please enter the email address you want to use to login."
-          footer={<p>We will email you to verify the change.</p>}
+          description="The email associated with your account."
+          footer={<p>Currently unable to change email.</p>}
         >
           <p className="text-xl mt-8 mb-4 font-semibold">
             {user ? user.email : undefined}
