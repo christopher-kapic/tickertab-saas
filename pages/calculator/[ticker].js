@@ -41,7 +41,7 @@ const Calculator = () => {
           let tdata = data;
           tdata.historicals = json;
           setData(tdata);
-        }).then(() => {console.log("Historicals: ", data)})
+        }).then(() => {console.log("Historicals: ", data)}).then(() => {console.log(data.chain)})
       
       getData({url: `/api/chain/${ticker}`, token: session.access_token})
         .then((json) => {
