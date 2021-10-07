@@ -8,7 +8,7 @@ const getChainCheckCache = async (ticker) => {
   if (historicals === null || new Date(historicals[0].updated_at) < now) {
     console.log(`Cache miss: ${ticker.toUpperCase()}`)
     // fetch
-    const apires = await fetch(`https://eodhistoricaldata.com/api/chain/${ticker.toUpperCase()}.US?api_token=${process.env.EODHISTORICAL_KEY}`, {
+    const apires = await fetch(`https://eodhistoricaldata.com/api/options/${ticker.toUpperCase()}.US?api_token=${process.env.EODHISTORICAL_KEY}`, {
       method: "GET"
     }).catch((err) => {console.log(err)})
     const apijson = await apires.json()
