@@ -32,7 +32,9 @@ const getHistoricals = async (req, res) => {
   const { token } = req.headers;
 
   try {
+    console.log('beginning to try')
     const user = await getUser(token);
+    console.log(user)
     const subscription = await getSubscription(user.id);
     // console.log(subscription)
     // console.log(subscription[0].prices)

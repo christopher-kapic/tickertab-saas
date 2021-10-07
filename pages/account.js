@@ -44,12 +44,12 @@ export default function Account() {
     setLoading(false);
   };
 
-  const triggerHistoricalTemp = async () => {
-    setLoading(true);
-    const {data, error} = await getData({url: '/api/historicals/tsla', token: session.access_token});
-    console.log(data);
-    setLoading(false);
-  }
+  // const triggerHistoricalTemp = async () => {
+  //   setLoading(true);
+  //   const {data, error} = await getData({url: '/api/historicals/tsla', token: session.access_token});
+  //   console.log(data);
+  //   setLoading(false);
+  // }
 
   const subscriptionName = subscription && subscription.prices.products.name;
   const subscriptionPrice =
