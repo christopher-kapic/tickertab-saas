@@ -1,6 +1,11 @@
 import { getSubscription, getUser, getHistoricalsFromDatabase, supabaseAdmin } from "@/utils/supabase-admin";
 import { next4PMNYCISOString } from "@/utils/helpers";
 
+const getFromDate = (daysBack) => {
+  let today = new Date();
+  today.setDate(today.getDate() - daysBack);
+  return today.toISOString().split('T')[0]
+}
 
 const getHistoricalsCheckCache = async (ticker) => {
   const now = new Date();
@@ -8,7 +13,7 @@ const getHistoricalsCheckCache = async (ticker) => {
   if (historicals === null || new Date(historicals[0].updated_at) < now) {
     console.log(`Cache miss: ${ticker.toUpperCase()}`)
     // fetch
-    const apires = await fetch(`https://eodhistoricaldata.com/api/eod/${ticker.toUpperCase()}.US?api_token=${process.env.EODHISTORICAL_KEY}&fmt=json`, {
+    const apires = await fetch(`https://eodhistoricaldata.com/api/eod/${ticker.toUpperCase()}.US?api_token=${process.env.EODHISTORICAL_KEY}&fmt=json&from=${getFromDate(140)}`, {
       method: "GET"
     }).catch((err) => {console.log(err)})
     const apijson = await apires.json()
