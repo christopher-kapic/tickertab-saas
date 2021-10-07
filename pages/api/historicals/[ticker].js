@@ -23,8 +23,12 @@ const getHistoricalsCheckCache = async (ticker) => {
     // const {data, error} = await supabaseAdmin.from('historicals')
       // .upsert({ticker: ticker, historical: apijson, expires_at: next_expiration})
 
-    await supabaseAdmin.from('historicals').delete().match({ticker: ticker.toUpperCase()})
-    await supabaseAdmin.from('historicals').insert({ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration})
+    try {
+      await supabaseAdmin.from('historicals').update({ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration}).match({ticker: ticker.toUpperCase()});
+    } catch {
+      await supabaseAdmin.from('historicals').insert({ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration});
+    }
+    // await supabaseAdmin.from('historicals').delete().match({ticker: ticker.toUpperCase()})
     //return historicals
     return {ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration}
   }
@@ -37,9 +41,7 @@ const getHistoricals = async (req, res) => {
   const { token } = req.headers;
 
   try {
-    console.log('beginning to try')
     const user = await getUser(token);
-    console.log(user)
     const subscription = await getSubscription(user.id);
     // console.log(subscription)
     // console.log(subscription[0].prices)

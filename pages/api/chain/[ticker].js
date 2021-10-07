@@ -18,10 +18,17 @@ const getChainCheckCache = async (ticker) => {
     // const {data, error} = await supabaseAdmin.from('historicals')
       // .upsert({ticker: ticker, historical: apijson, expires_at: next_expiration})
 
-    await supabaseAdmin.from('chains').delete().match({ticker: ticker.toUpperCase()})
-    await supabaseAdmin.from('chains').insert({ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration})
+    try {
+      // await supabaseAdmin.from('chains').insert({ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration})
+      // await supabaseAdmin.from('chains').update({ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration})
+      await supabaseAdmin.from('chains').update({ticker: ticker.toUpperCase(), chain: apijson, expires_at: next_expiration}).match({ ticker: ticker.toUpperCase() })
+      // await supabaseAdmin.from('chains').update({})
+      // await supabaseAdmin.from('chains').delete().match({ticker: ticker.toUpperCase()})
+    } catch {
+      await supabaseAdmin.from('chains').insert({ticker: ticker.toUpperCase(), chain: apijson, expires_at: next_expiration})
+    }
     //return historicals
-    return {ticker: ticker.toUpperCase(), historical: apijson, expires_at: next_expiration}
+    return {ticker: ticker.toUpperCase(), chain: apijson, expires_at: next_expiration}
   }
   console.log(`Cache hit: ${ticker.toUpperCase()}`)
   return historicals[0]
