@@ -11,6 +11,10 @@ import { getData } from '@/utils/helpers';
 
 import styles from '../../styles/Calculator.module.css';
 import DataContext from '@/components/context/DataContext';
+import { is_test } from '@/utils/is-test';
+
+// Uncomment for testing
+import { testdata } from '@/utils/test-data'
 
 const Calculator = () => {
   // Create context to share data between graph components
@@ -27,27 +31,36 @@ const Calculator = () => {
 
 
   useEffect(() => {
-    console.log('loading')
-    console.log(user)
     if (userLoaded) {
-      console.log('loaded')
-      console.log(session)
       if (!user) {
         router.replace('/');
       }
 
+      // Uncomment test data for testing. Only ship assuming is_test.
       getData({url: `/api/historicals/${ticker}`, token: session.access_token})
         .then((json) => {
-          let tdata = data;
-          tdata.historicals = json;
-          setData(tdata);
-        }).then(() => {console.log("Historicals: ", data)}).then(() => {console.log(data.chain)})
+          if (!Boolean(is_test)) {
+            let tdata = data;
+            tdata.historicals = json;
+            setData(tdata);
+          } else {
+            let tdata = data;
+            tdata.historicals = testdata.historicals;
+            setData(tdata);
+          }
+        }).then(() => {console.log("Historicals", data)})
       
       getData({url: `/api/chain/${ticker}`, token: session.access_token})
         .then((json) => {
-          let tdata = data;
-          tdata.chain = json;
-          setData(tdata);
+          if (!Boolean(is_test)) {
+            let tdata = data;
+            tdata.chain = json;
+            setData(tdata);
+          } else {
+            let tdata = data;
+            tdata.chain = testdata.chain;
+            setData(tdata)
+          }
         }).then(() => {console.log("Chain", data)})
     }
 
