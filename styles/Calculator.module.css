@@ -1,6 +1,7 @@
 .calculatorwrapper {
-    width: 100vw;
-    height: 90vh;
+    width: 1000px;
+    padding: 10px;
+    min-height: 80vh;
     background-color: #353535;
 }
 
