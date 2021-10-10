@@ -24,7 +24,6 @@ const Graph = ({settings}) => {
       boxShadow: '0px 1px 2px 1px #222222',
       cursor: 'crosshair'
     }}>
-      Hello World {settings.green}, this is {JSON.stringify(data.historicals)}
     </div>
   )
 }
