@@ -8,6 +8,13 @@ const Graph = ({settings}) => {
 
   const { height, width, daysBack, daysForward, paddingTop, paddingBottom, green, red, backgroundColor } = settings;
 
+  useEffect(() => {
+    const tdata = data;
+    setData(tdata);
+    const tinput = input;
+    setInput(tinput)
+  }, [data, input])
+
   return (
     <div style={{
       height: height,
@@ -17,7 +24,7 @@ const Graph = ({settings}) => {
       boxShadow: '0px 1px 2px 1px #222222',
       cursor: 'crosshair'
     }}>
-      Hello World {settings.green}, this is {JSON.stringify(data)}
+      Hello World {settings.green}, this is {JSON.stringify(data.historicals)}
     </div>
   )
 }

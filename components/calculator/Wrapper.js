@@ -38,26 +38,21 @@ const Wrapper = () => {
       getData({url: `/api/historicals/${ticker}`, token: session.access_token})
         .then((json) => {
           if (!Boolean(is_test)) {
-            let tdata = data;
-            tdata.historicals = json;
-            setData(tdata);
+            setData({...data, historicals: json});
           } else {
-            let tdata = data;
-            tdata.historicals = testdata.historicals;
-            setData(tdata);
+            setData({...data, historicals: testdata.historicals});
           }
+        }).then(() => {
+          const tdata = data;
+          setData(tdata)
         }).then(() => {console.log("Historicals", data)})
       
       getData({url: `/api/chain/${ticker}`, token: session.access_token})
         .then((json) => {
           if (!Boolean(is_test)) {
-            let tdata = data;
-            tdata.chain = json;
-            setData(tdata);
+            setData({...data, chain: json});
           } else {
-            let tdata = data;
-            tdata.chain = testdata.chain;
-            setData(tdata)
+            setData({...data, chain: testdata.chain})
           }
         }).then(() => {console.log("Chain", data)})
     }
