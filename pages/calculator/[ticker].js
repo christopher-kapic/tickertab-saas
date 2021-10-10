@@ -11,6 +11,7 @@ import { getData } from '@/utils/helpers';
 
 import styles from '../../styles/Calculator.module.css';
 import DataContext from '@/components/context/DataContext';
+import InputContext from '@/components/context/InputContext';
 import { is_test } from '@/utils/is-test';
 
 // Uncomment for testing
@@ -23,6 +24,12 @@ const Calculator = () => {
     data,
     setData
   }), [data]);
+
+  const [inputData, setInputData] = useState({});
+  const inputValue = useMemo(() => ({
+    inputData,
+    setInputData
+  }), [inputData])
   
   // Query the given stock
   const router = useRouter();
@@ -71,9 +78,11 @@ const Calculator = () => {
 
   return (
     <DataContext.Provider value={value}>
-      <div className={styles.calculatorwrapper}>
-        <h1>{ticker}</h1>
-      </div>
+      <InputContext.Provider value={inputValue}>
+        <div className={styles.calculatorwrapper}>
+          <h1>{ticker}</h1>
+        </div>
+      </InputContext.Provider>
     </DataContext.Provider>
   )
 };
