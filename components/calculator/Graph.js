@@ -25,8 +25,8 @@ const Graph = ({settings}) => {
       boxShadow: '0px 1px 2px 1px #222222',
       cursor: 'crosshair',
       color: '#000',
-      justifyContent: 'center',
       display: 'flex',
+      justifyContent: 'center',
       alignItems: 'center'
     }}>
       { historicals.historicals === undefined ?
