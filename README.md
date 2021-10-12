@@ -2,10 +2,7 @@
 
 ### To do:
 
-- pages/api/historicals
-- pages/api/chain
 - pages/calculator
-  - search
   - display the calculator for /\[ticker\]
 
 # This project was bootstrapped with Next.js Subscription Payments Starter
