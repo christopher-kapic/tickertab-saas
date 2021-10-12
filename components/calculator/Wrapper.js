@@ -5,20 +5,27 @@ import { getData } from '@/utils/helpers';
 import styles from '../../styles/Calculator.module.css';
 import { is_test } from '@/utils/is-test';
 import Graph from '@/components/calculator/Graph';
+// import { useState } from 'react';
 
 // Uncomment for testing
 import { testdata } from '@/utils/test-data'
-import { DataContext } from '@/components/context/DataStore';
-import { InputContext } from '@/components/context/InputStore';
+import { HistoricalsContext, ChainContext } from '@/components/context/DataStore';
+// import { InputContext } from '@/components/context/InputStore';
+
 const Wrapper = () => {
   // Create context to share data between graph components
-  const [data, setData] = useContext(DataContext)
-  const [input, setInput] = useContext(InputContext)
+  const [historicals, setHistoricals] = useContext(HistoricalsContext)
+  const [chain, setChain] = useContext(ChainContext)
+  // const [input, setInput] = useContext(InputContext) // Not updating input from this component.
   // Query the given stock
   const router = useRouter();
   const { ticker } = router.query
   const { userLoaded, user, session, userDetails, subscription } = useUser();
 
+  // useEffect(() => {
+  //   console.log("Historicals:", historicals)
+  //   console.log("Chain:", chain)
+  // }, [historicals, chain])
 
   useEffect(() => {
     if (userLoaded) {
@@ -30,23 +37,20 @@ const Wrapper = () => {
       getData({url: `/api/historicals/${ticker}`, token: session.access_token})
         .then((json) => {
           if (!Boolean(is_test)) {
-            setData({...data, historicals: json});
+            setHistoricals({...historicals, historicals: json});
           } else {
-            setData({...data, historicals: testdata.historicals});
+            setHistoricals({...historicals, historicals: testdata.historicals});
           }
-        }).then(() => {
-          const tdata = data;
-          setData(tdata)
-        }).then(() => {console.log("Historicals", data)})
+        })
       
       getData({url: `/api/chain/${ticker}`, token: session.access_token})
         .then((json) => {
           if (!Boolean(is_test)) {
-            setData({...data, chain: json});
+            setChain({...chain, chain: json});
           } else {
-            setData({...data, chain: testdata.chain})
+            setChain({...chain, chain: testdata.chain})
           }
-        }).then(() => {console.log("Chain", data)})
+        })
     }
   }, [user, userLoaded])
 
