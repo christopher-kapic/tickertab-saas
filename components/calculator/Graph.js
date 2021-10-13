@@ -48,86 +48,94 @@ const Graph = ({settings}) => {
   }, [historicals])
 
   return (
-    <div style={{
-      height: height,
-      width: width,
-      backgroundColor: backgroundColor,
-      borderRadius: 4,
-      boxShadow: '0px 1px 2px 1px #222222',
-      cursor: 'crosshair',
-      color: '#000',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      { historicals.historicals === undefined ?
-        <p style={{fontSize: 64}}>Loading...</p>
-        :
-        <svg height={height} width={width} ref={ref}
-          onClick={(e) => {
-            setIsMouseLive(false);
-            setMousePos({x: e.clientX - boundingRect.x + 1, y: e.clientY - boundingRect.y + 1})
-            const iv = input.prediction.impliedVolatility;
-            setInput({...input, prediction: {
-              date: xToDate((e.clientX - boundingRect.x + 1), width, daysBack, daysForward), 
-              price: yToPrice((e.clientY - boundingRect.y + 1), height, paddingTop, paddingBottom, priceLimits), 
-              impliedVolatility: iv}})
-          }}
-          onContextMenu={(e) => {
-            e.preventDefault();
-            setIsMouseLive(true);
-            setMousePos({x: e.clientX - boundingRect.x + 1, y: e.clientY - boundingRect.y + 1});
-            const iv = input.prediction.impliedVolatility;
-            setInput({...input, prediction: {
-              date: xToDate((e.clientX - boundingRect.x + 1), width, daysBack, daysForward), 
-              price: yToPrice((e.clientY - boundingRect.y + 1), height, paddingTop, paddingBottom, priceLimits), 
-              impliedVolatility: iv}})
-          }}
-          onMouseLeave={() => {
-            if (isMouseLive) {
-              setMousePos({x: null, y: null})
+    <div style={{overflow: "scroll", height: height, maxHeight: height, overflowY: 'scroll'}}
+      onScroll={(e) => console.log(e)}>
+      <div style={{
+        height: height,
+        width: width,
+        backgroundColor: backgroundColor,
+        borderRadius: 4,
+        boxShadow: '0px 1px 2px 1px #222222',
+        cursor: 'crosshair',
+        color: '#000',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'sticky',
+        top: 0
+      }}>
+        { historicals.historicals === undefined ?
+          <p style={{fontSize: 64}}>Loading...</p>
+          :
+          <svg height={height} width={width} ref={ref}
+            onClick={(e) => {
+              setIsMouseLive(false);
+              setMousePos({x: e.clientX - boundingRect.x + 1, y: e.clientY - boundingRect.y + 1})
               const iv = input.prediction.impliedVolatility;
               setInput({...input, prediction: {
-                date: undefined, 
-                price: undefined, 
+                date: xToDate((e.clientX - boundingRect.x + 1), width, daysBack, daysForward), 
+                price: yToPrice((e.clientY - boundingRect.y + 1), height, paddingTop, paddingBottom, priceLimits), 
                 impliedVolatility: iv}})
-            }
-          }}
-          onMouseMove={(e) => {
-            if (isMouseLive) {
+            }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              setIsMouseLive(true);
               setMousePos({x: e.clientX - boundingRect.x + 1, y: e.clientY - boundingRect.y + 1});
               const iv = input.prediction.impliedVolatility;
               setInput({...input, prediction: {
                 date: xToDate((e.clientX - boundingRect.x + 1), width, daysBack, daysForward), 
                 price: yToPrice((e.clientY - boundingRect.y + 1), height, paddingTop, paddingBottom, priceLimits), 
                 impliedVolatility: iv}})
-            }
-          }}
-          >
-          {historicals.historicals.historical.map((historical, idx) => {
-            if (idx === 0) {
-              return (<line key={idx}></line>)
-            }
-            return(
-              <line 
-              x1={dateToX(historicals.historicals.historical[idx - 1].date, width, daysBack, daysForward)}
-              y1={priceToY(historicals.historicals.historical[idx - 1].close, height, paddingTop, paddingBottom, priceLimits)}
-              x2={dateToX(historical.date, width, daysBack, daysForward)}
-              y2={priceToY(historical.close, height, paddingTop, paddingBottom, priceLimits)}
-              style={{strokeWidth: 2}}stroke={isGreen ? green : red}
-              key={idx}/>
-            )
-          })}
-          { mousePos.x === null ? <></> :
-          <line 
-          x1={dateToX(historicals.historicals.historical[historicals.historicals.historical.length - 1].date, width, daysBack, daysForward)}
-          y1={priceToY(historicals.historicals.historical[historicals.historicals.historical.length - 1].close, height, paddingTop, paddingBottom, priceLimits)}
-          x2={mousePos.x}
-          y2={mousePos.y}
-          style={{strokeWidth: 2}}stroke={isGreen ? green : red}
-          />}
-        </svg>
-        }
+            }}
+            onMouseLeave={() => {
+              if (isMouseLive) {
+                setMousePos({x: null, y: null})
+                const iv = input.prediction.impliedVolatility;
+                setInput({...input, prediction: {
+                  date: undefined, 
+                  price: undefined, 
+                  impliedVolatility: iv}})
+              }
+            }}
+            onMouseMove={(e) => {
+              if (isMouseLive) {
+                setMousePos({x: e.clientX - boundingRect.x + 1, y: e.clientY - boundingRect.y + 1});
+                const iv = input.prediction.impliedVolatility;
+                setInput({...input, prediction: {
+                  date: xToDate((e.clientX - boundingRect.x + 1), width, daysBack, daysForward), 
+                  price: yToPrice((e.clientY - boundingRect.y + 1), height, paddingTop, paddingBottom, priceLimits), 
+                  impliedVolatility: iv}})
+              }
+            }}
+            >
+            {historicals.historicals.historical.map((historical, idx) => {
+              if (idx === 0) {
+                return (<line key={idx}></line>)
+              }
+              return(
+                <line 
+                x1={dateToX(historicals.historicals.historical[idx - 1].date, width, daysBack, daysForward)}
+                y1={priceToY(historicals.historicals.historical[idx - 1].close, height, paddingTop, paddingBottom, priceLimits)}
+                x2={dateToX(historical.date, width, daysBack, daysForward)}
+                y2={priceToY(historical.close, height, paddingTop, paddingBottom, priceLimits)}
+                style={{strokeWidth: 2}}stroke={isGreen ? green : red}
+                key={idx}/>
+              )
+            })}
+            { mousePos.x === null ? <></> :
+            <line 
+            x1={dateToX(historicals.historicals.historical[historicals.historicals.historical.length - 1].date, width, daysBack, daysForward)}
+            y1={priceToY(historicals.historicals.historical[historicals.historicals.historical.length - 1].close, height, paddingTop, paddingBottom, priceLimits)}
+            x2={mousePos.x}
+            y2={mousePos.y}
+            style={{strokeWidth: 2}}stroke={isGreen ? green : red}
+            />}
+          </svg>
+          }
+      </div>
+      <div style={{height: 3 * height, backgroundColor: 'red'}}>
+
+      </div>
     </div>
   )
 }
