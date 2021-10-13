@@ -5,7 +5,7 @@ export const InputContext = createContext();
 const InputStore = ({ children }) => {
   const [input, setInput] = useState({
     prediction: {
-      seconds: undefined,
+      date: undefined,
       price: undefined,
       impliedVolatility: 10
     },

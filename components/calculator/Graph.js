@@ -13,7 +13,20 @@ const Graph = ({settings}) => {
   const [boundingRect, setBoundingRect] = useState({})
   const ref = useRef();
 
+  const [offset, setOffset] = useState(0)
+
   const { height, width, daysBack, daysForward, paddingTop, paddingBottom, green, red, backgroundColor } = settings;
+
+  useEffect(() => {
+    window.onscroll = () => {
+      window.scrollTo({
+        top: 0,
+        // behavior: "smooth"
+      });
+      setOffset(window.pageYOffset)
+      console.log(offset)
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -32,7 +45,6 @@ const Graph = ({settings}) => {
       console.log(historicals)
     }
     try {
-      console.log("ref", ref)
       setBoundingRect(ref.current.getBoundingClientRect());
     } catch {
       console.log("Loading bounding rect...")
@@ -56,23 +68,46 @@ const Graph = ({settings}) => {
         <p style={{fontSize: 64}}>Loading...</p>
         :
         <svg height={height} width={width} ref={ref}
+          onScroll={(e) => {
+            console.log(e)
+          }}
           onClick={(e) => {
             setIsMouseLive(false);
             setMousePos({x: e.clientX - boundingRect.x + 1, y: e.clientY - boundingRect.y + 1})
+            const iv = input.prediction.impliedVolatility;
+            setInput({...input, prediction: {
+              date: xToDate((e.clientX - boundingRect.x + 1), width, daysBack, daysForward), 
+              price: yToPrice((e.clientY - boundingRect.y + 1), height, paddingTop, paddingBottom, priceLimits), 
+              impliedVolatility: iv}})
           }}
           onContextMenu={(e) => {
             e.preventDefault();
             setIsMouseLive(true);
             setMousePos({x: e.clientX - boundingRect.x + 1, y: e.clientY - boundingRect.y + 1});
+            const iv = input.prediction.impliedVolatility;
+            setInput({...input, prediction: {
+              date: xToDate((e.clientX - boundingRect.x + 1), width, daysBack, daysForward), 
+              price: yToPrice((e.clientY - boundingRect.y + 1), height, paddingTop, paddingBottom, priceLimits), 
+              impliedVolatility: iv}})
           }}
           onMouseLeave={() => {
             if (isMouseLive) {
               setMousePos({x: null, y: null})
+              const iv = input.prediction.impliedVolatility;
+              setInput({...input, prediction: {
+                date: undefined, 
+                price: undefined, 
+                impliedVolatility: iv}})
             }
           }}
           onMouseMove={(e) => {
             if (isMouseLive) {
               setMousePos({x: e.clientX - boundingRect.x + 1, y: e.clientY - boundingRect.y + 1});
+              const iv = input.prediction.impliedVolatility;
+              setInput({...input, prediction: {
+                date: xToDate((e.clientX - boundingRect.x + 1), width, daysBack, daysForward), 
+                price: yToPrice((e.clientY - boundingRect.y + 1), height, paddingTop, paddingBottom, priceLimits), 
+                impliedVolatility: iv}})
             }
           }}
           >
