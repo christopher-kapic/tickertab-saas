@@ -59,8 +59,8 @@ const Wrapper = () => {
     width: 980,
     daysBack: 100,
     daysForward: 150,
-    paddingTop: 50,
-    paddingBottom: 50,
+    paddingTop: 100,
+    paddingBottom: 25,
     green: '#59C76A',
     red: '#C75959',
     backgroundColor: '#cccccc'
