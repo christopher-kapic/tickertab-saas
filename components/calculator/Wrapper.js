@@ -5,6 +5,7 @@ import { getData } from '@/utils/helpers';
 import styles from '../../styles/Calculator.module.css';
 import { is_test } from '@/utils/is-test';
 import Graph from '@/components/calculator/Graph';
+import Chart from '@/components/calculator/Chart';
 // import { useState } from 'react';
 
 // Uncomment for testing
@@ -70,6 +71,7 @@ const Wrapper = () => {
       <>
         <div className={styles.calculatorwrapper}>
           <Graph settings={settings}/>
+          <Chart />
         </div>
       </>
   )

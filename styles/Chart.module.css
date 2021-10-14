@@ -1,0 +1,9 @@
+.chartwrapper {
+    width: 980px;
+    /* height: calc(90vh - 370px); */
+    height: calc(90vh - 380px);
+    background-color: #cccccc;
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px 1px #222222;
+    margin: 10px 0px 10px 0px;
+}

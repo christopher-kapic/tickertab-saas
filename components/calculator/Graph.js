@@ -50,7 +50,7 @@ const Graph = ({settings}) => {
       });
       setPriceLimits({high: high, low: low})
     } catch {
-      console.log(historicals)
+      console.log("Historicals:", historicals)
     }
     try {
       setBoundingRect(ref.current.getBoundingClientRect());
