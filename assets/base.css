@@ -116,3 +116,8 @@ a {
 .height-screen-helper {
   height: var(--vh100-offset);
 }
+
+/* Used to hide scrollbar on graph */
+.graphContainer::-webkit-scrollbar {
+    display: none;
+}

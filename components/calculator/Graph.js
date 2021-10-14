@@ -2,6 +2,8 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { HistoricalsContext } from "../context/DataStore";
 import { InputContext } from "../context/InputStore";
 import { yToPrice, xToDate, dateToX, priceToY } from "./utils/graphUtils";
+import styles from '../../styles/Calculator.module.css';
+import classNames from "classnames";
 
 const Graph = ({settings}) => {
   const [historicals, setHistoricals] = useContext(HistoricalsContext)
@@ -23,6 +25,15 @@ const Graph = ({settings}) => {
       });
     }
   }, []);
+
+  // Set initial implied volatility
+  useEffect(() => {
+    try {
+      ref.current.scrollTop = input.prediction.impliedVolatility * 10;
+    } catch {
+      console.log("Loading ref...")
+    }
+  }, [ref])
 
   useEffect(() => {
     try {
@@ -47,9 +58,15 @@ const Graph = ({settings}) => {
     }
   }, [historicals])
 
+  // useEffect(() => {
+
+  // }, [ref])
+
   return (
-    <div style={{overflow: "scroll", height: height, maxHeight: height, overflowY: 'scroll'}}
-      onScroll={(e) => console.log(e)}>
+    <div style={{overflowY: "scroll", overflowX: 'hidden', height: height, maxHeight: height, msOverflowStyle: 'none'}}
+      class="graphContainer"
+      onScroll={() => console.log(ref.current.scrollTop)}
+      ref={ref}>
       <div style={{
         height: height,
         width: width,
@@ -67,7 +84,7 @@ const Graph = ({settings}) => {
         { historicals.historicals === undefined ?
           <p style={{fontSize: 64}}>Loading...</p>
           :
-          <svg height={height} width={width} ref={ref}
+          <svg height={height} width={width}
             onClick={(e) => {
               setIsMouseLive(false);
               setMousePos({x: e.clientX - boundingRect.x + 1, y: e.clientY - boundingRect.y + 1})
@@ -133,8 +150,7 @@ const Graph = ({settings}) => {
           </svg>
           }
       </div>
-      <div style={{height: 3 * height, backgroundColor: 'red'}}>
-
+      <div style={{height: 1000}}>
       </div>
     </div>
   )

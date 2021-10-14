@@ -20,3 +20,11 @@
 .searchwrapper h1 {
     font-size: 3em;
 }
+
+.graphContainer {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.graphContainer::-webkit-scrollbar {
+    display: none;
+}
