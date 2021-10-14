@@ -40,3 +40,68 @@ export const yToPrice = (y, height, paddingTop, paddingBottom, priceLimits) => {
     const price = (unadjustedY * dollarsPerPixel) + priceLimits.low;
     return price;
 }
+
+export const ivSlope = (iv, price, height, paddingBottom, paddingTop, priceLimits, width, daysBack, daysForward) => {
+    const availablePixels = height - paddingBottom - paddingTop;
+    const priceDelta = priceLimits.high - priceLimits.low;
+    const pixelsPerDollar = availablePixels / priceDelta;
+    
+    let td = new Date(new Date().toLocaleDateString("en-CA"));
+    let back = td;
+    back.setDate(back.getDate() - daysBack);
+    const totalDays = daysForward + daysBack;
+    const pixelsPerDay = width / totalDays;
+
+    const ivAsDelta = price * iv;
+    const priceUp = price + ivAsDelta;
+    const priceUpPixels = priceUp * pixelsPerDollar;
+
+    const yearForwardPixels = pixelsPerDay * 365;
+
+    const slope = priceUpPixels / yearForwardPixels;
+    return slope;
+}
+
+export const ivDelta = (iv, price, height, paddingBottom, paddingTop, priceLimits) => {
+    const availablePixels = height - paddingBottom - paddingTop;
+    const priceDelta = priceLimits.high - priceLimits.low;
+    const pixelsPerDollar = availablePixels / priceDelta;
+    
+    // let td = new Date(new Date().toLocaleDateString("en-CA"));
+    // let back = td;
+    // back.setDate(back.getDate() - daysBack);
+    // const totalDays = daysForward + daysBack;
+    // const pixelsPerDay = width / totalDays;
+
+    const ivAsDelta = price * iv / 100;
+    const priceUpPixels = ivAsDelta * pixelsPerDollar;
+    return priceUpPixels;
+
+    // const yearForwardPixels = pixelsPerDay * 365;
+
+    // const slope = priceUpPixels / yearForwardPixels;
+    // return slope;
+}
+
+
+export const ivYear = (width, daysBack, daysForward) => {
+    // const availablePixels = height - paddingBottom - paddingTop;
+    // const priceDelta = priceLimits.high - priceLimits.low;
+    // const pixelsPerDollar = availablePixels / priceDelta;
+    
+    let td = new Date(new Date().toLocaleDateString("en-CA"));
+    let back = td;
+    back.setDate(back.getDate() - daysBack);
+    const totalDays = daysForward + daysBack;
+    const pixelsPerDay = width / totalDays;
+
+    // const ivAsDelta = price * iv;
+    // const priceUp = price + ivAsDelta;
+    // const priceUpPixels = priceUp * pixelsPerDollar;
+
+    const yearForwardPixels = pixelsPerDay * 365;
+    return yearForwardPixels;
+
+    // const slope = priceUpPixels / yearForwardPixels;
+    // return slope;
+}

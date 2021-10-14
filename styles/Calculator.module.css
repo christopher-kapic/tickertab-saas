@@ -25,6 +25,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+/* Repeated in base.css */
 .graphContainer::-webkit-scrollbar {
     display: none;
 }

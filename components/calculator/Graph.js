@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { HistoricalsContext } from "../context/DataStore";
 import { InputContext } from "../context/InputStore";
-import { yToPrice, xToDate, dateToX, priceToY } from "./utils/graphUtils";
-import styles from '../../styles/Calculator.module.css';
-import classNames from "classnames";
+import { yToPrice, xToDate, dateToX, priceToY, ivDelta, ivYear } from "./utils/graphUtils";
+
 
 const Graph = ({settings}) => {
   const [historicals, setHistoricals] = useContext(HistoricalsContext)
@@ -28,8 +27,10 @@ const Graph = ({settings}) => {
 
   // Set initial implied volatility
   useEffect(() => {
+    const maxIV = input.settings.maxIV;
+    const pixelsPerIV = 1000 / maxIV;
     try {
-      ref.current.scrollTop = input.prediction.impliedVolatility * 10;
+      ref.current.scrollTop = 1000 - (input.prediction.impliedVolatility * pixelsPerIV);
     } catch {
       console.log("Loading ref...")
     }
@@ -65,7 +66,13 @@ const Graph = ({settings}) => {
   return (
     <div style={{overflowY: "scroll", overflowX: 'hidden', height: height, maxHeight: height, msOverflowStyle: 'none'}}
       class="graphContainer"
-      onScroll={() => console.log(ref.current.scrollTop)}
+      onScroll={() => {
+        if (isMouseLive) {
+          const maxIV = input.settings.maxIV;
+          const curIV = maxIV - ((ref.current.scrollTop / 1000) * maxIV);
+          setInput({...input, prediction: {...input.prediction, impliedVolatility: curIV}})
+        }
+      }}
       ref={ref}>
       <div style={{
         height: height,
@@ -140,13 +147,32 @@ const Graph = ({settings}) => {
               )
             })}
             { mousePos.x === null ? <></> :
-            <line 
-            x1={dateToX(historicals.historicals.historical[historicals.historicals.historical.length - 1].date, width, daysBack, daysForward)}
-            y1={priceToY(historicals.historicals.historical[historicals.historicals.historical.length - 1].close, height, paddingTop, paddingBottom, priceLimits)}
-            x2={mousePos.x}
-            y2={mousePos.y}
-            style={{strokeWidth: 2}}stroke={isGreen ? green : red}
-            />}
+            <>
+              {/* Prediction */}
+              <line 
+                x1={dateToX(historicals.historicals.historical[historicals.historicals.historical.length - 1].date, width, daysBack, daysForward)}
+                y1={priceToY(historicals.historicals.historical[historicals.historicals.historical.length - 1].close, height, paddingTop, paddingBottom, priceLimits)}
+                x2={mousePos.x}
+                y2={mousePos.y}
+                style={{strokeWidth: 2}}stroke={isGreen ? green : red}
+              />
+              {/* IV */}
+              <line
+                x1={mousePos.x}
+                y1={mousePos.y}
+                x2={mousePos.x + ivYear(width, daysBack, daysForward)}
+                y2={mousePos.y + ivDelta(input.prediction.impliedVolatility, input.prediction.price, height, paddingBottom, paddingTop, priceLimits)}
+                style={{strokeWidth: 2}} stroke="#aaa"
+              />
+              <line
+                x1={mousePos.x}
+                y1={mousePos.y}
+                x2={mousePos.x + ivYear(width, daysBack, daysForward)}
+                y2={mousePos.y - ivDelta(input.prediction.impliedVolatility, input.prediction.price, height, paddingBottom, paddingTop, priceLimits)}
+                style={{strokeWidth: 2}} stroke="#aaa"
+              />
+            </>
+            }
           </svg>
           }
       </div>
