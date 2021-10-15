@@ -1,5 +1,9 @@
 # TickerTab
 
+### A note on the license
+
+TickerTab (the code in this repo) is licensed under the GPL-3.0 License, but the project was bootstrapped with [Vercel's NextJS Subscription Payments Template](https://github.com/vercel/nextjs-subscription-payments). Since TickerTab is licensed under GPL-3.0, you may not create a private fork of _this_ repo. You may, however, bootstrap your own SaaS with Vercel's template and choose to make the source code private if you wish.
+
 ### To do:
 
 - pages/calculator
