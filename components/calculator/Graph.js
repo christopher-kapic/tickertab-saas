@@ -65,7 +65,7 @@ const Graph = ({settings}) => {
 
   return (
     <div style={{overflowY: "scroll", overflowX: 'hidden', height: height, maxHeight: height, msOverflowStyle: 'none'}}
-      class="graphContainer"
+      className="graphContainer"
       onScroll={() => {
         if (isMouseLive) {
           const maxIV = input.settings.maxIV;
