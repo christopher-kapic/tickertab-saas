@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { InputContext } from "../context/InputStore";
+import { BlackScholes, IVAdjuster, TimeToExpiration } from "@/components/calculator/utils/cellUtils"
 const styles = {
     width: 220,
     height: 120,
@@ -15,7 +16,7 @@ const styles = {
 
 const OptionCell = (props) => {
     const [input, setInput] = useContext(InputContext);
-    const { option } = props;
+    const { option, stockPrice, expiration } = props;
     if ( option === null || option.expirationDate === undefined) {
         return (
             <div style={styles}>
@@ -28,8 +29,8 @@ const OptionCell = (props) => {
             <p>Expiration: {option.expirationDate}</p>
             <p>Strike: {option.strike}</p>
             <p>Last Price: {option.lastPrice}</p>
-            { input.date === undefined ? <></> : 
-              <p>Prediction: </p>
+            { input.prediction.date === undefined ? <></> : 
+              <p>Prediction: {BlackScholes("call", stockPrice, input.prediction.price, TimeToExpiration(new Date(expiration), input.prediction.date), 0.03, IVAdjuster(input.prediction.impliedVolatility))}</p>
             }
         </div>
     )
