@@ -38,6 +38,7 @@ export const IVAdjuster = (IV) => {
  * @returns {Number} Price
  */
 export function BlackScholes(PutCallFlag, S, X, T, r, v) {
+    console.log("S", S, "X", X, "T", T, "r", r, "v", v)
     let d1 = (Math.log(S / X) + (r + v * v / 2) * T) / (v * Math.sqrt(T));
     let d2 = d1 - v * Math.sqrt(T);
     if (PutCallFlag === "call") {

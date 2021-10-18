@@ -63,7 +63,6 @@ const get_expiration_dates = (chain_json) => {
  */
 const table_from_json = (chain_json, call) => {
   const call_string = call ? 'CALL' : 'PUT';
-  console.log(chain_json)
   const exp_dates = get_expiration_dates(chain_json);
   const strike_prices = get_strike_prices(chain_json, call);
   let grid = [];
