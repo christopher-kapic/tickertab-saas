@@ -30,7 +30,7 @@ const OptionCell = (props) => {
             <p>Strike: {option.strike}</p>
             <p>Last Price: {option.lastPrice}</p>
             { input.prediction.date === undefined ? <></> : 
-              <p>Prediction: {BlackScholes("call", stockPrice, input.prediction.price, TimeToExpiration(new Date(option.expirationDate), input.prediction.date), 0.03, IVAdjuster(input.prediction.impliedVolatility))}</p>
+              <p>Prediction: {BlackScholes(true, input.prediction.price, option.strike, TimeToExpiration(new Date(option.expirationDate), input.prediction.date), 0.03, IVAdjuster(input.prediction.impliedVolatility))}</p>
             }
         </div>
     )
